@@ -90,6 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Column(
         children: [
+          // Banner Penjualan
           Container(
             margin: const EdgeInsets.all(12),
             padding: const EdgeInsets.all(16),
@@ -156,6 +157,8 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
           ),
+
+          // Filter Kategori
           SizedBox(
             height: 42,
             child: ListView.builder(
@@ -188,6 +191,8 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           const SizedBox(height: 8),
+
+          // Grid Katalog Otomatis Menyesuaikan Layar (Auto Responsive)
           Expanded(
             child: listTampil.isEmpty
                 ? const Center(
@@ -196,9 +201,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 : GridView.builder(
                     padding: const EdgeInsets.all(12),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.90,
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 220, // Lebar ideal tiap kartu produk (otomatis nambah kolom jika layar melebar)
+                          childAspectRatio: 0.78, // Rasio tinggi-lebar agar tidak melar dan proporsional
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
                         ),
@@ -207,37 +212,32 @@ class _DashboardPageState extends State<DashboardPage> {
                       final produk = listTampil[index];
                       return Card(
                         elevation: 2,
+                        clipBehavior: Clip.antiAlias,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 125,
-                              width: double.infinity,
+                            Expanded(
                               child: Stack(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(10),
-                                    ),
-                                    child: Image.network(
-                                      produk.gambarUrl,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 125,
-                                      errorBuilder: (ctx, err, stack) =>
-                                          Container(
-                                            height: 125,
-                                            color: Colors.grey.shade200,
-                                            child: const Icon(
+                                  Image.network(
+                                    produk.gambarUrl,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    errorBuilder: (ctx, err, stack) =>
+                                        Container(
+                                          color: Colors.grey.shade200,
+                                          child: const Center(
+                                            child: Icon(
                                               Icons.fastfood,
                                               size: 40,
                                               color: Colors.grey,
                                             ),
                                           ),
-                                    ),
+                                        ),
                                   ),
                                   if (produk.diskonPersen > 0)
                                     Positioned(
@@ -268,7 +268,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                              padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
@@ -282,9 +282,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                       fontSize: 13,
                                     ),
                                   ),
-                                  const SizedBox(height: 3),
+                                  const SizedBox(height: 4),
                                   _buildBadgeStok(produk.stok),
-                                  const SizedBox(height: 3),
+                                  const SizedBox(height: 6),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -299,16 +299,16 @@ class _DashboardPageState extends State<DashboardPage> {
                                       ),
                                       InkWell(
                                         onTap: produk.stok == 0 ? null : () {},
-                                        borderRadius: BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(12),
                                         child: CircleAvatar(
-                                          radius: 14,
+                                          radius: 13,
                                           backgroundColor: produk.stok == 0
                                               ? Colors.grey.shade300
                                               : const Color(0xFFFF2D55),
                                           child: const Icon(
                                             Icons.add,
                                             color: Colors.white,
-                                            size: 16,
+                                            size: 15,
                                           ),
                                         ),
                                       ),

@@ -55,166 +55,219 @@ class _KasirPageState extends State<KasirPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Kasir POS')),
-      body: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: daftarProdukDummy.length,
-              itemBuilder: (context, index) {
-                final produk = daftarProdukDummy[index];
-                return Card(
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.fastfood,
-                      color: Color(0xFFFF2D55),
-                    ),
-                    title: Text(
-                      produk.nama,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      '${_formatRupiah(produk.harga)} | Stok: ${produk.stok}',
-                    ),
-                    trailing: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF2D55),
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () => _tambahKeKeranjang(produk),
-                      icon: const Icon(Icons.add_shopping_cart, size: 18),
-                      label: const Text('Tambah'),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const VerticalDivider(width: 1),
-          Expanded(
-            flex: 2,
-            child: Column(
+    final bool isLayarLebar = MediaQuery.of(context).size.width > 700;
+
+    Widget daftarProdukWidget = ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: daftarProdukDummy.length,
+      itemBuilder: (context, index) {
+        final produk = daftarProdukDummy[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(12),
-                  color: Colors.grey[200],
-                  child: const Text(
-                    'Ringkasan Pesanan',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
+                const Icon(Icons.fastfood, color: Color(0xFFFF2D55), size: 30),
+                const SizedBox(width: 10),
                 Expanded(
-                  child: _keranjang.isEmpty
-                      ? const Center(child: Text('Keranjang masih kosong'))
-                      : ListView(
-                          children: _keranjang.entries.map((entry) {
-                            final produk = entry.key;
-                            final jumlah = entry.value;
-                            return ListTile(
-                              title: Text(
-                                produk.nama,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              subtitle: Text(
-                                _formatRupiah(produk.harga * jumlah),
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.remove_circle_outline,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () =>
-                                        _kurangiDariKeranjang(produk),
-                                  ),
-                                  Text(
-                                    '$jumlah',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.add_circle_outline,
-                                      color: Colors.green,
-                                    ),
-                                    onPressed: () => _tambahKeKeranjang(produk),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        blurRadius: 4,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
-                  ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Total Pembayaran:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            _formatRupiah(_hitungTotal()),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Color(0xFFFF2D55),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        produk.nama,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFF2D55),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                          ),
-                          onPressed: _keranjang.isEmpty
-                              ? null
-                              : () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Transaksi Berhasil!'),
-                                    ),
-                                  );
-                                  setState(() {
-                                    _keranjang.clear();
-                                  });
-                                },
-                          child: const Text('BAYAR SEKARANG'),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${_formatRupiah(produk.harga)} | Stok: ${produk.stok}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
                   ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF2D55),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: produk.stok == 0
+                      ? null
+                      : () => _tambahKeKeranjang(produk),
+                  child: const Text('Tambah', style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        );
+      },
+    );
+
+    Widget areaKeranjangWidget = Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(10),
+          color: Colors.grey[200],
+          child: const Text(
+            'Ringkasan Pesanan',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+        ),
+        Expanded(
+          child: _keranjang.isEmpty
+              ? const Center(
+                  child: Text(
+                    'Keranjang masih kosong',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                )
+              : ListView(
+                  children: _keranjang.entries.map((entry) {
+                    final produk = entry.key;
+                    final jumlah = entry.value;
+                    return ListTile(
+                      dense: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                      title: Text(
+                        produk.nama,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _formatRupiah(produk.harga * jumlah),
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onPressed: () => _kurangiDariKeranjang(produk),
+                          ),
+                          Text(
+                            '$jumlah',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                              color: Colors.green,
+                              size: 20,
+                            ),
+                            onPressed: () => _tambahKeKeranjang(produk),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 4,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Total:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  Text(
+                    _formatRupiah(_hitungTotal()),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Color(0xFFFF2D55),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF2D55),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  onPressed: _keranjang.isEmpty
+                      ? null
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Transaksi Berhasil!'),
+                            ),
+                          );
+                          setState(() {
+                            _keranjang.clear();
+                          });
+                        },
+                  child: const Text(
+                    'BAYAR SEKARANG',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Kasir POS')),
+      body: isLayarLebar
+          ? Row(
+              children: [
+                Expanded(flex: 3, child: daftarProdukWidget),
+                const VerticalDivider(width: 1),
+                Expanded(flex: 2, child: areaKeranjangWidget),
+              ],
+            )
+          : Column(
+              children: [
+                Expanded(flex: 5, child: daftarProdukWidget),
+                const Divider(height: 1),
+                Expanded(flex: 4, child: areaKeranjangWidget),
+              ],
+            ),
     );
   }
 }
