@@ -34,7 +34,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF1E3A8A),
+        selectedItemColor: const Color(0xFFFF2D55),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(

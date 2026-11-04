@@ -59,7 +59,6 @@ class _KasirPageState extends State<KasirPage> {
       appBar: AppBar(title: const Text('Kasir POS')),
       body: Row(
         children: [
-          // Sisi Kiri: Daftar Produk yang Bisa Dibeli
           Expanded(
             flex: 3,
             child: ListView.builder(
@@ -71,7 +70,7 @@ class _KasirPageState extends State<KasirPage> {
                   child: ListTile(
                     leading: const Icon(
                       Icons.fastfood,
-                      color: Color(0xFF1E3A8A),
+                      color: Color(0xFFFF2D55),
                     ),
                     title: Text(
                       produk.nama,
@@ -81,6 +80,10 @@ class _KasirPageState extends State<KasirPage> {
                       '${_formatRupiah(produk.harga)} | Stok: ${produk.stok}',
                     ),
                     trailing: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFF2D55),
+                        foregroundColor: Colors.white,
+                      ),
                       onPressed: () => _tambahKeKeranjang(produk),
                       icon: const Icon(Icons.add_shopping_cart, size: 18),
                       label: const Text('Tambah'),
@@ -91,8 +94,6 @@ class _KasirPageState extends State<KasirPage> {
             ),
           ),
           const VerticalDivider(width: 1),
-
-          // Sisi Kanan: Ringkasan Keranjang & Total
           Expanded(
             flex: 2,
             child: Column(
@@ -177,7 +178,7 @@ class _KasirPageState extends State<KasirPage> {
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: Color(0xFF1E3A8A),
+                              color: Color(0xFFFF2D55),
                             ),
                           ),
                         ],
@@ -187,7 +188,7 @@ class _KasirPageState extends State<KasirPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF1E3A8A),
+                            backgroundColor: const Color(0xFFFF2D55),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),

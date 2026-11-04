@@ -1,40 +1,78 @@
 class Produk {
+  final int id;
   final String nama;
+  final String kategori;
   final double harga;
   final int stok;
-  final String kategori;
-  int diskonPersen;
+  final String gambarUrl;
+  final int diskonPersen;
 
-  Produk({
+  const Produk({
+    required this.id,
     required this.nama,
+    required this.kategori,
     required this.harga,
     required this.stok,
-    required this.kategori,
+    required this.gambarUrl,
     this.diskonPersen = 0,
   });
 }
 
-// Daftar 6 produk dummy (data awal)
 final List<Produk> daftarProdukDummy = [
-  Produk(
-    nama: 'Kopi Susu Gula Aren',
-    harga: 18000,
-    stok: 50,
+  const Produk(
+    id: 1,
+    nama: 'Kopi Susu Gula Aren 250ml',
     kategori: 'Minuman',
+    harga: 18000,
+    stok: 24,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=300',
+    diskonPersen: 20,
   ),
-  Produk(
-    nama: 'Roti Bakar Coklat',
+  const Produk(
+    id: 2,
+    nama: 'Roti Bakar Cokelat Keju',
+    kategori: 'Makanan',
     harga: 15000,
-    stok: 20,
-    kategori: 'Makanan',
+    stok: 5,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?w=300',
   ),
-  Produk(
-    nama: 'Mie Goreng Spesial',
-    harga: 20000,
-    stok: 30,
-    kategori: 'Makanan',
+  const Produk(
+    id: 3,
+    nama: 'Matcha Latte Ice',
+    kategori: 'Minuman',
+    harga: 22000,
+    stok: 0,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=300',
   ),
-  Produk(nama: 'Es Teh Manis', harga: 5000, stok: 100, kategori: 'Minuman'),
-  Produk(nama: 'Kentang Goreng', harga: 12000, stok: 40, kategori: 'Cemilan'),
-  Produk(nama: 'Ayam Geprek', harga: 25000, stok: 15, kategori: 'Makanan'),
+  const Produk(
+    id: 4,
+    nama: 'Nasi Goreng Banjar Spesial',
+    kategori: 'Makanan',
+    harga: 25000,
+    stok: 12,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300',
+    diskonPersen: 10,
+  ),
+  const Produk(
+    id: 5,
+    nama: 'Kentang Goreng Crispy',
+    kategori: 'Snack',
+    harga: 12000,
+    stok: 18,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300',
+  ),
+  const Produk(
+    id: 6,
+    nama: 'Air Mineral Botol 600ml',
+    kategori: 'Minuman',
+    harga: 5000,
+    stok: 40,
+    gambarUrl:
+        'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=300',
+  ),
 ];

@@ -57,7 +57,7 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
                   const Center(
                     child: CircleAvatar(
                       radius: 40,
-                      backgroundColor: Color(0xFF1E3A8A),
+                      backgroundColor: Color(0xFFFF2D55),
                       child: Icon(Icons.store, size: 40, color: Colors.white),
                     ),
                   ),
@@ -84,7 +84,7 @@ class _ProfilTokoPageState extends State<ProfilTokoPage> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1E3A8A),
+                        backgroundColor: const Color(0xFFFF2D55),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),

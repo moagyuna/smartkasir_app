@@ -51,8 +51,8 @@ class RiwayatPage extends StatelessWidget {
             child: ListTile(
               contentPadding: const EdgeInsets.all(16),
               leading: CircleAvatar(
-                backgroundColor: const Color(0xFF1E3A8A).withOpacity(0.1),
-                child: const Icon(Icons.receipt, color: Color(0xFF1E3A8A)),
+                backgroundColor: const Color(0xFFFFEAEA),
+                child: const Icon(Icons.receipt, color: Color(0xFFFF2D55)),
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,15 +86,14 @@ class RiwayatPage extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.blue.shade50,
+                            color: const Color(0xFFFFEAEA),
                             borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: Colors.blue.shade200),
                           ),
                           child: Text(
                             trx['metode'].toString(),
                             style: const TextStyle(
                               fontSize: 11,
-                              color: Color(0xFF1E3A8A),
+                              color: Color(0xFFFF2D55),
                             ),
                           ),
                         ),

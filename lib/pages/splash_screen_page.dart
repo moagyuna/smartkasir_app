@@ -12,7 +12,7 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
-  int _durasiDetik = 5;
+  int _durasiDetik = 10;
   Timer? _timer;
 
   @override
@@ -46,7 +46,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E3A8A),
+      backgroundColor: const Color(0xFFFF2D55),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +60,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               child: const Icon(
                 Icons.point_of_sale_rounded,
                 size: 72,
-                color: Color(0xFF1E3A8A),
+                color: Color(0xFFFF2D55),
               ),
             ),
             const SizedBox(height: 24),
@@ -88,7 +88,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             ),
             const SizedBox(height: 14),
             Text(
-              'Memuat data toko ($_durasiDetik detik)...',
+              'Menyiapkan sistem SmartKasir ($_durasiDetik detik)...',
               style: const TextStyle(fontSize: 12, color: Colors.white70),
             ),
           ],
